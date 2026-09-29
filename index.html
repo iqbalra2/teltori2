@@ -13,6 +13,44 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Baloo+Da+2:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
+
+<!-- Floating WhatsApp & Messenger Buttons Style -->
+<style>
+  .floating-chat-container {
+    position: fixed;
+    bottom: 75px; /* বটম বারের উপরে রাখার জন্য */
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 9999;
+  }
+  .floating-btn {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .floating-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+  }
+  .floating-btn img {
+    width: 30px;
+    height: 30px;
+  }
+  .floating-btn.wa {
+    background-color: #25D366;
+  }
+  .floating-btn.ms {
+    background-color: #0084FF;
+  }
+</style>
+
 <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
@@ -24,7 +62,7 @@
 <header class="top">
   <div class="wrap">
     <a class="logo" href="#" aria-label="Teltori">
-      <svg viewBox="0 0 340 64" width="150" height="28" role="img" aria-label="Teltori">
+      <svg viewBox="0 0 340 64" width="190" height="36" role="img" aria-label="Teltori">
         <path d="M28 6c9 7 15 15 15 24a15 15 0 0 1-30 0c0-9 6-17 15-24z" fill="#C6E84A"/>
         <text x="54" y="44" font-family="'Baloo Da 2',sans-serif" font-weight="700" font-size="38" fill="#FFFFFF">Tel<tspan fill="#C6E84A">tori</tspan></text>
       </svg>
@@ -39,12 +77,10 @@
 <header class="hero">
   <div class="seeds" aria-hidden="true"></div>
   
-  <!-- ছবি একদম উপরে নিয়ে আসা হলো এবং চ্যাপ্টা সমস্যা ঠিক করা হলো -->
   <div class="stage" style="order: -1; margin-bottom: 20px; width: 100%;">
     <img src="images/hero-poster.jpg" alt="Teltori নারকেল তেল ও ক্যাস্টর অয়েল — চুলের যত্নে প্রকৃতির শক্তি" style="width: 100%; height: auto; display: block; object-fit: contain;">
   </div>
   
-  <!-- তৃতীয় ফটোর লেখাগুলো ছবির নিচে দেওয়া হলো -->
   <div class="wrap">
     <span class="eyebrow" data-edit="hero.eyebrow">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.5-9.5 9-9.5 9z"/></svg>
@@ -201,7 +237,7 @@
 
 <div class="bar"><a class="btn big" href="#order">৯৯০ টাকায় অর্ডার করুন</a></div>
 <button class="gear" id="gearBtn" type="button" title="অ্যাডমিন" aria-label="অ্যাডমিন">
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1 1.55V21a2 2 0 0 1-4 0v-.09A1.7 1.7 0 0 0 9 19.4a1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06.06a1.7 1.7 0 0 0 .34-1.87 1.7 1.7 0 0 0-1.55-1H3a2 2 0 0 1 0-4h.09A1.7 1.7 0 0 0 4.6 9a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.7 1.7 0 0 0 1.87.34H9a1.7 1.7 0 0 0 1-1.55V3a2 2 0 0 1 4 0v.09a1.7 1.7 0 0 0 1 1.55 1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.87V9a1.7 1.7 0 0 0 1.55 1H21a2 2 0 0 1 0 4h-.09a1.7 1.7 0 0 0-1.55 1z"/></svg>
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1 1.55V21a2 2 0 0 1-4 0v-.09A1.7 1.7 0 0 0 9 19.4a1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.7 1.7 0 0 0 .34-1.87 1.7 1.7 0 0 0-1.55-1H3a2 2 0 0 1 0-4h.09A1.7 1.7 0 0 0 4.6 9a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.7 1.7 0 0 0 1.87.34H9a1.7 1.7 0 0 0 1-1.55V3a2 2 0 0 1 4 0v.09a1.7 1.7 0 0 0 1 1.55 1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.87V9a1.7 1.7 0 0 0 1.55 1H21a2 2 0 0 1 0 4h-.09a1.7 1.7 0 0 0-1.55 1z"/></svg>
 </button>
 
 <dialog id="mine">
@@ -219,10 +255,17 @@
   <div style="display:flex;gap:10px"><button class="btn" id="epGo" type="button">লগইন</button><button class="btn line ghost-dark" id="epClose" type="button">বাতিল</button></div>
 </dialog>
 
-<!-- Floating WhatsApp Button -->
-<a href="https://wa.me/8801763613445" class="whatsapp-float" target="_blank" aria-label="WhatsApp Chat">
+<!-- Floating WhatsApp & Messenger Chat Buttons -->
+<div class="floating-chat-container">
+  <!-- Messenger Button -->
+  <a href="https://m.me/YOUR_PAGE_USERNAME" class="floating-btn ms" target="_blank" aria-label="Messenger Chat">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/be/be/Facebook_Messenger_logo_2020.svg" alt="Messenger">
+  </a>
+  <!-- WhatsApp Button (Pre-filled message added) -->
+  <a href="https://wa.me/8801763613445?text=%E0%A6%86%E0%A6%AE%E0%A6%BF%20%E0%A6%85%E0%A6%B1%E0%A6%A1%E0%A6%BE%E0%A6%B0%20%E0%A6%95%E0%A6%B0%E0%A6%A4%E0%A6%BE%20%E0%A6%9A%E0%A6%BE%E0%A6%AF%E0%A6%BF" class="floating-btn wa" target="_blank" aria-label="WhatsApp Chat">
     <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
-</a>
+  </a>
+</div>
 
 <script src="js/config.js"></script>
 <script>
