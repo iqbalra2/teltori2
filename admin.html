@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="bn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><title>অ্যাডমিন — Teltori</title><link rel="icon" href="favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Baloo+Da+2:wght@700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0}body{font:16px/1.6 'Hind Siliguri',system-ui,sans-serif;background:#eef2ec;color:#0c2214}
+header{background:#0f3b22;color:#fff;padding:14px 20px;display:flex;justify-content:space-between;align-items:center}
+header b{font:800 22px 'Baloo Da 2',sans-serif;color:#c6e84a}button,input,select{font:inherit}
+.w{max-width:1100px;margin:auto;padding:20px}.login{max-width:380px;margin:60px auto;background:#fff;padding:26px;border-radius:14px;box-shadow:0 10px 40px rgba(0,0,0,.1)}
+.login input{width:100%;padding:11px;margin:6px 0 14px;border:1.5px solid #cdd8c6;border-radius:8px}
+.b{background:#c6e84a;color:#0f3b22;border:0;border-radius:999px;padding:9px 20px;font-weight:700;cursor:pointer}.b.g{background:#0f3b22;color:#fff}
+.demo{background:#fff3cd;border-left:4px solid #c6a814;padding:10px 14px;margin-bottom:16px;font-size:15px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.stats div{background:#fff;border-radius:12px;padding:14px;text-align:center}.stats b{display:block;font:800 26px 'Baloo Da 2',sans-serif;color:#0f3b22}
+.f{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap}.f input,.f select{padding:9px 12px;border:1.5px solid #cdd8c6;border-radius:8px;background:#fff}.f input{flex:1;min-width:180px}
+.o{background:#fff;border-radius:12px;padding:14px 16px;margin-bottom:10px;display:grid;grid-template-columns:1.3fr 1.6fr auto;gap:12px;align-items:center}
+.o small{color:#5b6b53;display:block}.o .t{font:800 18px 'Baloo Da 2',sans-serif;color:#0f3b22}
+.o .a{display:flex;flex-direction:column;gap:6px;align-items:stretch}.o select{padding:6px;border-radius:8px;border:1.5px solid #cdd8c6}
+.o a{text-align:center;text-decoration:none}.del{background:none;border:0;color:#b3261e;cursor:pointer;font-size:14px}
+.empty{text-align:center;padding:40px;color:#5b6b53}#msg{color:#b3261e}[hidden]{display:none!important}
+@media(max-width:720px){.stats{grid-template-columns:1fr 1fr}.o{grid-template-columns:1fr}}
+</style></head><body>
+<header><b>Teltori — অ্যাডমিন</b><button class="b" id="out" hidden>লগআউট</button></header>
+
+<form class="login" id="lf" hidden>
+  <h2 style="margin-bottom:10px">অ্যাডমিন লগইন</h2>
+  <label>ইমেইল<input id="em" type="email" autocomplete="username" required></label>
+  <label>পাসওয়ার্ড<input id="pw" type="password" autocomplete="current-password" required></label>
+  <p id="lmsg" style="color:#b3261e;min-height:1.4em"></p>
+  <button class="b" style="width:100%">লগইন করুন</button>
+</form>
+
+<div class="w" id="app" hidden>
+  <p class="demo" id="demo" hidden><b>ডেমো মোড:</b> Firebase কনফিগার করা হয়নি, তাই শুধু এই ব্রাউজারে করা অর্ডার দেখাচ্ছে। সব ডিভাইস/দেশ থেকে আসা অর্ডার এক জায়গায় দেখতে README অনুযায়ী Firebase যুক্ত করুন।</p>
+  <p id="msg"></p>
+  <div class="stats"><div><b id="s1">০</b>মোট অর্ডার</div><div><b id="s2">০</b>নতুন অর্ডার</div><div><b id="s3">০</b>আজকের অর্ডার</div><div><b id="s4">৳০</b>মোট বিক্রয় (বাতিল বাদে)</div></div>
+  <div class="f"><input id="q" placeholder="নাম, ফোন বা অর্ডার নম্বর দিয়ে খুঁজুন"><select id="st"><option value="">সব স্ট্যাটাস</option></select></div>
+  <div id="list"></div>
+</div>
+
+<script src="js/config.js"></script><script src="js/store.js"></script>
+<script>
+(function(){
+const S=Store,$=s=>document.querySelector(s),D='০১২৩৪৫৬৭৮৯',bn=n=>String(n).replace(/\d/g,d=>D[d]),money=n=>'৳'+bn(n.toLocaleString('en-US'));
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let all=[],unsub=null;
+Object.keys(S.ST).forEach(k=>$('#st').insertAdjacentHTML('beforeend','<option value="'+k+'">'+S.ST[k]+'</option>'));
+function render(){
+  const q=$('#q').value.trim().toLowerCase(),st=$('#st').value,today=new Date().toDateString();
+  const l=all.filter(o=>(!st||o.status===st)&&(!q||(o.name+o.phone+o.orderNo).toLowerCase().includes(q)));
+  $('#s1').textContent=bn(all.length);$('#s2').textContent=bn(all.filter(o=>o.status==='new').length);
+  $('#s3').textContent=bn(all.filter(o=>new Date(o.createdAt).toDateString()===today).length);
+  $('#s4').textContent=money(all.filter(o=>o.status!=='cancelled').reduce((a,o)=>a+(o.total||0),0));
+  $('#list').innerHTML=l.length?l.map(o=>'<div class="o" data-id="'+esc(o.id)+'"><div><b>'+esc(o.orderNo)+'</b> <small>'+new Date(o.createdAt).toLocaleString('bn-BD')+'</small><span class="t">'+money(o.total||0)+'</span> <small>'+bn(o.qty)+' সেট</small></div>'+
+    '<div><b>'+esc(o.name)+'</b><small><a href="tel:'+esc(o.phone)+'">'+esc(o.phone)+'</a></small><small>'+esc(o.address)+'</small>'+(o.note?'<small>নোট: '+esc(o.note)+'</small>':'')+'</div>'+
+    '<div class="a"><select class="ss">'+Object.keys(S.ST).map(k=>'<option value="'+k+'"'+(k===o.status?' selected':'')+'>'+S.ST[k]+'</option>').join('')+'</select>'+
+    '<a class="b g" target="_blank" rel="noopener" href="https://wa.me/88'+esc(o.phone)+'">WhatsApp</a><button class="del">মুছুন</button></div></div>').join(''):'<p class="empty">কোনো অর্ডার পাওয়া যায়নি।</p>';
+}
+$('#q').oninput=render;$('#st').onchange=render;
+$('#list').addEventListener('change',e=>{if(e.target.classList.contains('ss'))S.setStatus(e.target.closest('.o').dataset.id,e.target.value).catch(x=>$('#msg').textContent='স্ট্যাটাস বদলানো যায়নি: '+x.message)});
+$('#list').addEventListener('click',e=>{if(e.target.classList.contains('del')&&confirm('এই অর্ডারটি স্থায়ীভাবে মুছে ফেলবেন?'))S.remove(e.target.closest('.o').dataset.id)});
+$('#lf').onsubmit=async e=>{e.preventDefault();$('#lmsg').textContent='';try{await S.login($('#em').value,$('#pw').value)}catch(x){$('#lmsg').textContent='ইমেইল বা পাসওয়ার্ড সঠিক নয়।'}};
+$('#out').onclick=()=>S.logout();
+S.adminAuth(u=>{
+  $('#lf').hidden=!!u;$('#app').hidden=!u;$('#out').hidden=!u||!!u.demo;$('#demo').hidden=!(u&&u.demo);
+  if(unsub){unsub();unsub=null}
+  if(u)S.adminWatch(l=>{all=l;$('#msg').textContent='';render()},e=>{$('#msg').textContent=e.code==='permission-denied'?'এই অ্যাকাউন্টের অ্যাডমিন অনুমতি নেই — firestore.rules-এ সঠিক UID বসানো হয়েছে কিনা দেখুন।':'ডেটা লোড করা যায়নি: '+e.message}).then(f=>unsub=f);
+});
+})();
+</script></body></html>

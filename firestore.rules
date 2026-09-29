@@ -1,0 +1,41 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // নিচের লাইনে আপনার অ্যাডমিন ইউজারের UID বসান (Firebase → Authentication → Users → User UID)
+    function isAdmin() {
+      return request.auth != null && request.auth.uid == 'এখানে_অ্যাডমিন_UID_বসান';
+    }
+
+    function validNew() {
+      let d = request.resource.data;
+      return d.keys().hasOnly(['uid','orderNo','product','name','phone','address','qty','unitPrice','total','note','status','createdAt'])
+        && d.uid == request.auth.uid
+        && d.product is string && d.product.size() <= 160
+        && d.name is string && d.name.size() >= 2 && d.name.size() <= 80
+        && d.phone is string && d.phone.matches('^01[3-9][0-9]{8}$')
+        && d.address is string && d.address.size() >= 8 && d.address.size() <= 300
+        && d.note is string && d.note.size() <= 300
+        && d.qty is int && d.qty >= 1 && d.qty <= 20
+        && d.unitPrice is int && d.unitPrice > 0
+        && d.total == d.qty * d.unitPrice
+        && d.status == 'new'
+        && d.orderNo is string && d.orderNo.size() <= 20
+        && d.createdAt == request.time;
+    }
+
+    match /orders/{id} {
+      allow create: if request.auth != null && validNew();
+      // ক্রেতা শুধু নিজের অর্ডার পড়তে পারে; অ্যাডমিন সব অর্ডার (দেশ/ডিভাইস নির্বিশেষে)
+      allow read:   if request.auth != null && (resource.data.uid == request.auth.uid || isAdmin());
+      allow update: if isAdmin() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status']);
+      allow delete: if isAdmin();
+    }
+
+    // ওয়েবসাইটের লেখা/দাম: সবাই পড়তে পারবে, শুধু অ্যাডমিন বদলাতে পারবে
+    match /site/{doc} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+  }
+}
