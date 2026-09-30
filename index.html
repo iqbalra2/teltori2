@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Teltori Hair Care Combo — নারকেল তেল + ক্যাস্টর অয়েল, মাত্র ৯৯০ টাকা</title>
+<title>Teltori Hair Care Combo — নারকেল তেল + ক্যাস্টর অয়েল, মাত্র ৯ ৯০ টাকা</title>
 <meta name="description" content="চুল পড়া, রুক্ষতা ও শুষ্ক চুলের যত্নে খাঁটি নারকেল তেল ও ক্যাস্টর অয়েলের কম্বো। ৭৫০ মি.লি., নিয়মিত মূল্য ১,৫০০ টাকা, অফারে মাত্র ৯৯০ টাকা। সারা বাংলাদেশে ফ্রি হোম ডেলিভারি।">
 <meta property="og:title" content="Teltori Hair Care Combo — নারকেল তেল + ক্যাস্টর অয়েল">
 <meta property="og:description" content="৭৫০ মি.লি. কম্বো মাত্র ৯৯০ টাকা। ফ্রি হোম ডেলিভারি, ক্যাশ অন ডেলিভারি।">
@@ -90,7 +90,7 @@
     <p class="lead" data-edit="hero.lead">প্রাকৃতিক দুই তেলের সহজ কম্বো — ৫০০ মি.লি. নারকেল তেল ও ২৫০ মি.লি. ক্যাস্টর অয়েল, মোট ৭৫০ মি.লি়। কোনো অগ্রিম পেমেন্ট নেই, পণ্য হাতে পেয়ে পেমেন্ট করবেন।</p>
     <div class="price-row">
       <span class="old" data-edit="price.old">নিয়মিত মূল্য ৳১,৫০০</span>
-      <span class="now"><span data-price>৳৯৯০</span></span>
+      <span class="now"><span data-price>৳৯ ৯০</span></span>
       <span class="save">৩৪% ছাড়</span>
     </div>
     <div class="cta">
@@ -169,7 +169,7 @@
     <div class="item"><b>নারকেল তেল</b><span>৫০০ মি.লি.</span></div>
     <div class="item"><b>ক্যাস্টর অয়েল</b><span>২৫০ মি.লি.</span></div>
     <div class="item"><b>ডেলিভারি চার্জ</b><span>৳০ (ফ্রি)</span></div>
-    <div class="total"><span>নিয়মিত মূল্য ৳১,৫০০ → আজকের অফার</span><b><span data-price>৳৯৯০</span></b></div>
+    <div class="total"><span>নিয়মিত মূল্য ৳১,৫০০ → আজকের অফার</span><b><span data-price>৳৯ ৯০</span></b></div>
   </div>
 </div></section>
 
@@ -279,5 +279,27 @@ if (window.TELTORI.gtmId) {
 <script src="js/store.js"></script>
 <script src="js/edit.js"></script>
 <script src="js/main.js"></script>
+
+<!-- Teltori নতুন লোগো পরিবর্তন করার স্কিপ্ট -->
+<script>
+/* Teltori নতুন লোগো: হেডারের পুরোনো লোগোর জায়গায় বসায় */
+(function () {
+  function run() {
+    var box = document.querySelector('.top .logo') || document.querySelector('.logo');
+    if (!box) return;
+    box.innerHTML =
+      '<span class="tt-logo" aria-label="Teltori">' +
+        '<svg class="tt-leaves" viewBox="0 0 60 42" aria-hidden="true">' +
+          '<path class="tt-stem" d="M29 40C29 36 30 33 31 30"/>' +
+          '<path class="tt-leaf" d="M29 31C19 31 7 27 5 15C17 13 28 19 29 31Z"/>' +
+          '<path class="tt-leaf" d="M31 30C26 16 38 4 54 3C56 18 46 30 31 30Z"/>' +
+          '<path class="tt-vein" d="M28 30Q17 26 8 17M32 29Q40 22 49 8"/>' +
+        '</svg>' +
+        '<span class="tt-name">Tel<b>tori</b></span>' +
+      '</span>';
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run); else run();
+})();
+</script>
 </body>
 </html>
