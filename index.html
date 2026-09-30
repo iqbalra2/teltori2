@@ -333,16 +333,13 @@ document.getElementById('sub').addEventListener('click', function(e) {
     // ক্লায়েন্টের হোয়াটসঅ্যাপ নম্বর (8801763613445)
     const whatsappUrl = `https://wa.me/8801763613445?text=${encodeURIComponent(message)}`;
 
-    // লোকাল স্টোরেজে অর্ডার সেভ করা (যাতে 'আমার অর্ডার' থেকে দেখা ও ক্যানসেল করা যায়)
+    // লোকাল স্টোরেজে অর্ডার সেভ করা (যাতে 'আমার অর্ডার' থেকে দেখা যায়)
     let orders = JSON.parse(localStorage.getItem('teltori_orders') || '[]');
     const newOrder = { id: randomId, name, phone, address, date: new Date().toLocaleString() };
     orders.push(newOrder);
     localStorage.setItem('teltori_orders', JSON.stringify(orders));
 
-    // সরাসরি হোয়াটসঅ্যাপে নিয়ে যাওয়া (স্বয়ংক্রিয়ভাবে মেসেজ চলে যাবে)
-    window.location.href = whatsappUrl;
-});
-</script>
+    // সরাসরি হোয়াটসঅ্যাপে নিয়ে যাওয়া (কোনো পপ-আপ মেসেজ ছাড়া)
     window.location.href = whatsappUrl;
 });
 </script>
