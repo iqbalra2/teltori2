@@ -68,6 +68,16 @@
   .floating-btn.ms {
     background-color: #0084FF;
   }
+  .floating-btn.ms {
+    background-color: #0084FF;
+  }
+  #sub.btn.big {
+    background-color: #ff0000 !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    margin-bottom: 0px !important;
+  }
 </style>
 
 <script>document.documentElement.classList.add('js')</script>
@@ -329,8 +339,10 @@ document.getElementById('sub').addEventListener('click', function(e) {
     orders.push(newOrder);
     localStorage.setItem('teltori_orders', JSON.stringify(orders));
 
-    // সফলতার মেসেজ দেখিয়ে হোয়াটসঅ্যাপে রিডাইরেক্ট করা
-    alert('কনগ্রাচুলেশন! আপনার অর্ডার সফলভাবে সম্পন্ন হয়েছে। অর্ডারের বিস্তারিত পাঠানোর জন্য হোয়াটসঅ্যাপে নিয়ে যাওয়া হচ্ছে।');
+    // সরাসরি হোয়াটসঅ্যাপে নিয়ে যাওয়া (স্বয়ংক্রিয়ভাবে মেসেজ চলে যাবে)
+    window.location.href = whatsappUrl;
+});
+</script>
     window.location.href = whatsappUrl;
 });
 </script>
