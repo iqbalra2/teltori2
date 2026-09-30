@@ -19,10 +19,22 @@
     body {
     zoom: 90%;
     }
-      header.top {
+        header.top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding-left: 16px;
     padding-right: 16px;
-      }
+  }
+  .header-order-btn {
+    background-color: #C6E84A;
+    color: #0F3822;
+    padding: 8px 16px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+  }
   .floating-chat-container {
     position: fixed;
     bottom: 75px; /* বটম বারের উপরে রাখার জন্য */
@@ -82,7 +94,7 @@
     </a>
     <nav>
       <button class="lnk openMine" type="button">আমার অর্ডার</button>
-      <a class="btn" href="#order">অর্ডার নাও</a>
+      <a href="#order" class="header-order-btn">Order Now</a>
     </nav>
   </div>
 </header>
