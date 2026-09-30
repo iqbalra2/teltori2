@@ -311,39 +311,46 @@ if (window.TELTORI.gtmId) {
 <script src="js/edit.js"></script>
 <script src="js/main.js"></script>
 
-<!-- কাস্টম অর্ডার ও হোয়াটসঅ্যাপ রিডাইরেক্ট স্ক্রিপ্ট -->
+<!-- অর্ডার সাবমিট, ডাটা সেভ ও হোয়াটসঅ্যাপ রিডাইরেকশন স্ক্রিপ্ট -->
 <script>
 document.getElementById('sub').addEventListener('click', function(e) {
-    e.preventDefault();
-    
-    const name = document.getElementById('fn').value.trim();
-    const phone = document.getElementById('fp').value.trim();
-    const address = document.getElementById('fa').value.trim();
-    
-    if(!name || !phone || !address) {
-        alert('অনুগ্রহ করে আপনার নাম, মোবাইল নম্বর এবং সম্পূর্ণ ঠিকানা লিখুন।');
-        return;
-    }
+  e.preventDefault();
 
-    // ইউনিক অর্ডার আইডি তৈরি (যেমন: TT-XXXXX)
-    const randomId = 'TT-' + Math.random().toString(36).substring(2, 7).toUpperCase();
-    
-    // হোয়াটসঅ্যাপে পাঠানোর বার্তা ফরম্যাট
-    const message = `🛒 *নতুন অর্ডার — Teltori Hair Care Combo*\nঅর্ডার নং: ${randomId}\nনাম: ${name}\nফোন: ${phone}\nঠিকানা: ${address}\nপণ্য: নারকেল তেল ৫০০ মি.লি. + ক্যাস্টর অয়েল ২৫০ মি.লি. × ১ সেট\nমূল্য: ৳৯৯০\nডেলিভারি চার্জ: ফ্রি\nসর্বমোট: ৳৯৯০ (ক্যাশ অন ডেলিভারি)`;
+  const name = document.getElementById('fn').value.trim();
+  const phone = document.getElementById('fp').value.trim();
+  const address = document.getElementById('fa').value.trim();
 
-    // ক্লায়েন্টের হোয়াটসঅ্যাপ নম্বর (8801763613445)
-    const whatsappUrl = `https://wa.me/8801763613445?text=${encodeURIComponent(message)}`;
+  if (!name || !phone || !address) {
+    alert('অনুগ্রহ করে আপনার নাম, মোবাইল নম্বর এবং সম্পূর্ণ ঠিকানা লিখুন।');
+    return;
+  }
 
-    // লোকাল স্টোরেজে অর্ডার সেভ করা (যাতে 'আমার অর্ডার' থেকে দেখা যায়)
-    let orders = JSON.parse(localStorage.getItem('teltori_orders') || '[]');
-    const newOrder = { id: randomId, name, phone, address, date: new Date().toLocaleString() };
-    orders.push(newOrder);
-    localStorage.setItem('teltori_orders', JSON.stringify(orders));
+  // ইউনিক অর্ডার আইডি তৈরি (যেমন: TT-3N5VX)
+  const randomId = 'TT-' + Math.random().toString(36).substring(2, 7).toUpperCase();
 
-    // সরাসরি হোয়াটসঅ্যাপে নিয়ে যাওয়া (কোনো পপ-আপ মেসেজ ছাড়া)
-    window.location.href = whatsappUrl;
+  // ১. ওয়েবসাইটের লোকাল মেমোরিতে কাস্টমারের জন্য অর্ডার সেভ করা
+  const orderData = {
+    id: randomId,
+    name: name,
+    phone: phone,
+    address: address,
+    product: 'Teltori Hair Care Combo (নারকেল তেল + ক্যাস্টর অয়েল)',
+    price: '৳৯৯০',
+    date: new Date().toLocaleDateString('bn-BD', { day: 'numeric', month: 'long', year: 'numeric' })
+  };
+
+  let orders = JSON.parse(localStorage.getItem('teltori_orders') || '[]');
+  orders.unshift(orderData); // নতুন অর্ডার সবার ওপরে শো করবে
+  localStorage.setItem('teltori_orders', JSON.stringify(orders));
+
+  // ২. হোয়াটসঅ্যাপের প্রি-ফিল্ড মেসেজ ফরম্যাট
+  const message = `🛒 *নতুন অর্ডার — Teltori Hair Care Combo*\nঅর্ডার নং: ${randomId}\nনাম: ${name}\nফোন: ${phone}\nঠিকানা: ${address}\nপণ্য: নারকেল তেল ৫০০ মি.লি. + ক্যাস্টর অয়েল ২৫০ মি.লি. × ১ সেট\nমূল্য: ৳৯৯০\nডেলিভারি চার্জ: ফ্রি\nসর্বমোট: ৳৯৯০ (ক্যাশ অন ডেলিভারি)`;
+
+  const whatsappUrl = `https://wa.me/8801763613445?text=${encodeURIComponent(message)}`;
+
+  // ৩. সরাসরি হোয়াটসঅ্যাপে নিয়ে যাওয়া
+  window.location.href = whatsappUrl;
 });
-</script>
 
 <!-- Teltori নতুন লোগো পরিবর্তন করার স্কিপ্ট -->
 <script>
