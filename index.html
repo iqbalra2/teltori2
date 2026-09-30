@@ -211,11 +211,9 @@
         <label>আপনার নাম<input id="fn" autocomplete="name" placeholder="যেমনঃ রহিম উদ্দিন" maxlength="80"></label>
         <label>মোবাইল নম্বর<input id="fp" type="tel" inputmode="tel" autocomplete="tel" placeholder="01XXXXXXXXX" maxlength="18"></label>
         <label>সম্পূর্ণ ঠিকানা<textarea id="fa" rows="3" placeholder="বাসা/হোল্ডিং, রোড, থানা, জেলা" maxlength="300"></textarea></label>
-        <label>পরিমাণ<select id="fq"></select></label>
-        <label>অতিরিক্ত কিছু বলতে চাইলে (ঐচ্ছিক)<input id="fnote" placeholder="যেমনঃ সুবিধাজনক ডেলিভারি সময়" maxlength="300"></label>
-        <dl class="sum">
+        <label style="display: none !important;">পরিমাণ <select id="fq"><option value="1">১ সেট — ৯৯০</option></select></label>
+        <label style="display: none !important;">অতিরিক্ত কিছু বলতে চাইলে (ঐচ্ছিক) <input id="fnote" placeholder="যেমনঃ সুবিধাজনক ডেলিভারি সময়"></label>
           <div><dt>কম্বো মূল্য</dt><dd id="sUnit">৳৯৯০ × ১</dd></div>
-          <div><dt>ডেলিভারি চার্জ</dt><dd>ফ্রি</dd></div>
           <div class="tot"><dt>সর্বমোট</dt><dd id="sTot">৳৯৯০</dd></div>
         </dl>
         <p id="err" role="alert"></p>
